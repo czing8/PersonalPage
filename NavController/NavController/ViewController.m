@@ -10,14 +10,11 @@
 
 #import "UIImage+Extension.h"
 
-
 #define kHeadH 200
 #define kHeadMinH 64
 #define kTabBarH 44
 
-
 @interface ViewController ()
-
 
 @property (nonatomic, strong) UILabel *titleLabel;   //导航栏标题
 
@@ -25,12 +22,19 @@
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *headHeightConstraint;
 @property (nonatomic, assign) CGFloat lastOffsetY;
-
+@property (nonatomic, assign) CGFloat alpha;
 
 
 @end
 
 @implementation ViewController
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    _titleLabel.alpha = _alpha;
+    
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -48,7 +52,7 @@
     [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
     
     self.navigationItem.titleView = self.titleLabel;
-    self.titleLabel.text = @"吖了个峥";
+    self.titleLabel.text = @"个人中心";
     self.titleLabel.alpha = 0;
 }
 
@@ -89,6 +93,15 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UIViewController * vc = [[UIViewController alloc]init];
+    vc.view.backgroundColor = [UIColor orangeColor];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     CGFloat offsetY = scrollView.contentOffset.y;
@@ -104,16 +117,14 @@
     
     _headHeightConstraint.constant = height;
     
-    // 设置导航条的背景图片
-    CGFloat alpha = delta / (kHeadH - kHeadMinH);
+    _alpha = delta / (kHeadH - kHeadMinH);
     
-    // 当alpha大于1，导航条半透明，因此做处理，大于1，就直接=0.99
-    if (alpha >= 1) {
-        alpha = 0.99;
+    if (_alpha >= 1) {
+        _alpha = 0.99;
     }
-    _titleLabel.alpha = alpha;
+    _titleLabel.alpha = _alpha;
     // 设置导航条的背景图片
-    UIImage *image = [UIImage imageWithColor:[UIColor colorWithRed:48 green:0 blue:200 alpha:alpha] size:CGSizeMake(1, 1)];
+    UIImage *image = [UIImage imageWithColor:[UIColor colorWithRed:48 green:0 blue:200 alpha:_alpha] size:CGSizeMake(1, 1)];
     
     [self.navigationController.navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
 }
