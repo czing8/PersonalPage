@@ -24,18 +24,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"个人中心";
+    self.title = @"个人中心模板";
     
     [self initData];
+    [self displayUIs];
 }
 
 - (void)initData{
-    _dataSource = @[@"Style1 --> 拉伸效果（Storyboard实现）", @"Style2 -->  "];
+    _dataSource = @[@"最简洁风格", @"拉伸效果（Storyboard实现）"];
     
     
 }
 
-
+- (void)displayUIs {
+    
+    
+}
 
 
 #pragma mark - UITableViewDelegate Methods
@@ -55,7 +59,7 @@
     }
     
     [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    
+    cell.textLabel.textColor = [UIColor colorWithWhite:0.293 alpha:1.000];
     cell.textLabel.text = _dataSource[indexPath.row];
     
     return cell;
@@ -64,11 +68,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.row == 0) {
-        [self performSegueWithIdentifier:@"ToExample1Segue" sender:self];
+        [self performSegueWithIdentifier:@"ToExample2Segue" sender:self];
     }
     else if (indexPath.row == 1) {
-        Example2Controller * exampleVC = [[Example2Controller alloc] init];
-        [self.navigationController pushViewController:exampleVC animated:YES];
+        [self performSegueWithIdentifier:@"ToExample1Segue" sender:self];
     }
     
     [self performSelector:@selector(deselect:) withObject:tableView afterDelay:0.2f];

@@ -2,8 +2,8 @@
 //  Example1Controller.m
 //  PersonalCenterPage
 //
-//  Created by Vols on 15/8/11.
-//  Copyright (c) 2015年 Vols. All rights reserved.
+//  Created by Vols on 14/8/11.
+//  Copyright (c) 2014年 Vols. All rights reserved.
 //
 
 #import "Example1Controller.h"
@@ -19,8 +19,7 @@
 @property (weak, nonatomic) IBOutlet UITableView        * tableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint * headHeightConstraint;
 
-
-@property (nonatomic, strong) UILabel *titleLabel;      //导航栏标题
+@property (nonatomic, strong) UILabel *titleLabel;
 
 @property (nonatomic, assign) CGFloat lastOffsetY;
 @property (nonatomic, assign) CGFloat alpha;
@@ -31,20 +30,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor   = [UIColor whiteColor];
-    
-    _lastOffsetY = -(kHeadH + kTabBarH);
-    
-    self.tableView.contentInset = UIEdgeInsetsMake(kHeadH + kTabBarH, 0, 0, 0);
-    
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    
-    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
-    [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
-    
-    self.navigationItem.titleView = self.titleLabel;
-    self.titleLabel.text    = @"个人中心";
-    self.titleLabel.alpha   = 0;
+
+    [self displayUIs];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -52,6 +39,39 @@
     
     _titleLabel.alpha = _alpha;
 }
+
+- (void)displayUIs {
+    self.view.backgroundColor   = [UIColor whiteColor];
+    self.automaticallyAdjustsScrollViewInsets = NO;
+
+    _lastOffsetY = -(kHeadH + kTabBarH);
+    
+    self.tableView.contentInset = UIEdgeInsetsMake(kHeadH + kTabBarH, 0, 0, 0);    
+    [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell_identifier"];
+
+    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
+    
+    self.navigationItem.titleView = self.titleLabel;
+    self.titleLabel.text    = @"个人中心";
+    self.titleLabel.alpha   = 0;
+    
+    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    backButton.frame = CGRectMake(0, 0, 40, 30);
+    [backButton setTitle:@"返回" forState:UIControlStateNormal];
+    [backButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(backAction:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    self.navigationItem.leftBarButtonItem = leftButton;
+}
+
+
+#pragma mark - actions
+
+- (void)backAction:(UIButton *)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 #pragma mark - getter/setter
 
@@ -72,16 +92,8 @@
     return 20;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *ID = @"cell_identifier";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
-    
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID
-                ];
-    }
-    
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell_identifier"];
     [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
     UIView *bgView = UIView.new;
@@ -99,15 +111,12 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    UIViewController * vc   = [[UIViewController alloc]init];
-    vc.view.backgroundColor = [UIColor orangeColor];
-    [self.navigationController pushViewController:vc animated:YES];
+    [self pushNextViewController:[UIViewController class]];
 }
 
 
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGFloat offsetY = scrollView.contentOffset.y;
     
     CGFloat delta   = offsetY - _lastOffsetY;
@@ -129,10 +138,17 @@
     _titleLabel.alpha = _alpha;
 
     UIImage *image = [UIImage imageWithColor:[UIColor colorWithRed:248/255.f green:87/255.f blue:77/255.f alpha:_alpha] size:CGSizeMake(1, 1)];
-    
     [self.navigationController.navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
 }
 
+#pragma mark - helper
+
+- (void)pushNextViewController:(Class)class{
+    UIViewController * vc = [[class alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    vc.view.backgroundColor = [UIColor purpleColor];
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
