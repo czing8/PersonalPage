@@ -31,7 +31,7 @@
 }
 
 - (void)initData{
-    _dataSource = @[@"最简洁风格", @"拉伸效果（Storyboard实现）"];
+    _dataSource = @[@"1.最简单样式", @"2.拉伸效果：Storyboard实现", @"3.拉伸效果：代码实现，原理同2", @"4.拉伸效果：连tableView一起封装"];
     
     
 }
@@ -73,7 +73,13 @@
     else if (indexPath.row == 1) {
         [self performSegueWithIdentifier:@"ToExample1Segue" sender:self];
     }
-    
+    else if (indexPath.row == 2) {
+        [self performSegueWithIdentifier:@"ToExample3Segue" sender:self];
+    }
+    else if (indexPath.row == 3) {
+        [self performSegueWithIdentifier:@"ToExample4Segue" sender:self];
+    }
+
     [self performSelector:@selector(deselect:) withObject:tableView afterDelay:0.2f];
 }
 

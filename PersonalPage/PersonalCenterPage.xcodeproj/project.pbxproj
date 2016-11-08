@@ -26,6 +26,10 @@
 		F15802A11DC9C6880022541F /* Example2Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = F15802931DC9C6880022541F /* Example2Controller.m */; };
 		F15802A21DC9C6880022541F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F15802951DC9C6880022541F /* ViewController.m */; };
 		F15802A51DC9C9070022541F /* UIImage+VAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = F15802A41DC9C9070022541F /* UIImage+VAdd.m */; };
+		F168014C1DD1A04B00367096 /* Example3Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = F168014B1DD1A04B00367096 /* Example3Controller.m */; };
+		F16801501DD1A14000367096 /* VExpandHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = F168014F1DD1A14000367096 /* VExpandHeader.m */; };
+		F16801531DD1ABF000367096 /* Example4Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = F16801521DD1ABF000367096 /* Example4Controller.m */; };
+		F16801561DD1AC1B00367096 /* VExpand1Header.m in Sources */ = {isa = PBXBuildFile; fileRef = F16801551DD1AC1B00367096 /* VExpand1Header.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +74,14 @@
 		F15802951DC9C6880022541F /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		F15802A31DC9C9070022541F /* UIImage+VAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+VAdd.h"; sourceTree = "<group>"; };
 		F15802A41DC9C9070022541F /* UIImage+VAdd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+VAdd.m"; sourceTree = "<group>"; };
+		F168014A1DD1A04B00367096 /* Example3Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example3Controller.h; sourceTree = "<group>"; };
+		F168014B1DD1A04B00367096 /* Example3Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example3Controller.m; sourceTree = "<group>"; };
+		F168014E1DD1A14000367096 /* VExpandHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VExpandHeader.h; sourceTree = "<group>"; };
+		F168014F1DD1A14000367096 /* VExpandHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VExpandHeader.m; sourceTree = "<group>"; };
+		F16801511DD1ABF000367096 /* Example4Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example4Controller.h; sourceTree = "<group>"; };
+		F16801521DD1ABF000367096 /* Example4Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Example4Controller.m; sourceTree = "<group>"; };
+		F16801541DD1AC1B00367096 /* VExpand1Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VExpand1Header.h; sourceTree = "<group>"; };
+		F16801551DD1AC1B00367096 /* VExpand1Header.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VExpand1Header.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +120,7 @@
 				F15802661DC9C5920022541F /* Main.storyboard */,
 				F15802A31DC9C9070022541F /* UIImage+VAdd.h */,
 				F15802A41DC9C9070022541F /* UIImage+VAdd.m */,
+				F168014D1DD1A14000367096 /* VExpandHeader */,
 				F15802741DC9C6880022541F /* 3rds */,
 				F15802691DC9C5920022541F /* Assets.xcassets */,
 				F158026B1DC9C5920022541F /* LaunchScreen.storyboard */,
@@ -174,8 +187,23 @@
 				F15802911DC9C6880022541F /* Example1Controller.m */,
 				F15802921DC9C6880022541F /* Example2Controller.h */,
 				F15802931DC9C6880022541F /* Example2Controller.m */,
+				F168014A1DD1A04B00367096 /* Example3Controller.h */,
+				F168014B1DD1A04B00367096 /* Example3Controller.m */,
+				F16801511DD1ABF000367096 /* Example4Controller.h */,
+				F16801521DD1ABF000367096 /* Example4Controller.m */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		F168014D1DD1A14000367096 /* VExpandHeader */ = {
+			isa = PBXGroup;
+			children = (
+				F168014E1DD1A14000367096 /* VExpandHeader.h */,
+				F168014F1DD1A14000367096 /* VExpandHeader.m */,
+				F16801541DD1AC1B00367096 /* VExpand1Header.h */,
+				F16801551DD1AC1B00367096 /* VExpand1Header.m */,
+			);
+			path = VExpandHeader;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,13 +287,17 @@
 				F15802A01DC9C6880022541F /* Example1Controller.m in Sources */,
 				F158029D1DC9C6880022541F /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
 				F15802621DC9C5920022541F /* AppDelegate.m in Sources */,
+				F16801531DD1ABF000367096 /* Example4Controller.m in Sources */,
 				F15802961DC9C6880022541F /* MASCompositeConstraint.m in Sources */,
+				F168014C1DD1A04B00367096 /* Example3Controller.m in Sources */,
 				F15802A21DC9C6880022541F /* ViewController.m in Sources */,
 				F158029E1DC9C6880022541F /* View+MASAdditions.m in Sources */,
 				F158029C1DC9C6880022541F /* NSArray+MASAdditions.m in Sources */,
+				F16801561DD1AC1B00367096 /* VExpand1Header.m in Sources */,
 				F15802991DC9C6880022541F /* MASLayoutConstraint.m in Sources */,
 				F158025F1DC9C5920022541F /* main.m in Sources */,
 				F158029B1DC9C6880022541F /* MASViewConstraint.m in Sources */,
+				F16801501DD1A14000367096 /* VExpandHeader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -422,6 +454,7 @@
 				F15802731DC9C5920022541F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

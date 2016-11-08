@@ -24,4 +24,5 @@
 
 + (UIImage *)coreBlurImage:(UIImage *)image ratio:(CGFloat)ratio;
 
+
 @end
