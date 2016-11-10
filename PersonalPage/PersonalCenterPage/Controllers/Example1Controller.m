@@ -7,14 +7,15 @@
 //
 
 #import "Example1Controller.h"
-#import "UIImage+VAdd.h"
-#import "Masonry.h"
+#import "ContentViewController.h"
 
 #define kHeadH 200
 #define kHeadMinH 64
 #define kTabBarH 44
 
 @interface Example1Controller ()
+
+@property (nonatomic, strong) UIView * navigationBgView;
 
 @property (weak, nonatomic) IBOutlet UITableView        * tableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint * headHeightConstraint;
@@ -30,41 +31,47 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
+    [self navigationConfig];
     [self displayUIs];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    _titleLabel.alpha = _alpha;
+    [self scrollViewDidScroll:self.tableView];
 }
 
 - (void)displayUIs {
-    self.view.backgroundColor   = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
 
     _lastOffsetY = -(kHeadH + kTabBarH);
     
     self.tableView.contentInset = UIEdgeInsetsMake(kHeadH + kTabBarH, 0, 0, 0);    
     [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell_identifier"];
+}
 
+- (void)navigationConfig {
+    
     [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
+    self.navigationController.navigationBar.barStyle  = UIBarStyleBlack; //变相状态栏变白
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    
+    UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(backAction:)];
+    self.navigationItem.leftBarButtonItem = leftButton;
     
     self.navigationItem.titleView = self.titleLabel;
     self.titleLabel.text    = @"个人中心";
     self.titleLabel.alpha   = 0;
     
-    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    backButton.frame = CGRectMake(0, 0, 40, 30);
-    [backButton setTitle:@"返回" forState:UIControlStateNormal];
-    [backButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [backButton addTarget:self action:@selector(backAction:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    self.navigationItem.leftBarButtonItem = leftButton;
+    _navigationBgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
+    _navigationBgView.backgroundColor = [UIColor colorWithRed:33/255.0 green:184/255.0 blue:229/255.0 alpha:1.0];
+    _navigationBgView.alpha = 0.0;
+    UIView *uiBarBackground = self.navigationController.navigationBar.subviews.firstObject;
+    [uiBarBackground addSubview:_navigationBgView];
 }
-
 
 #pragma mark - actions
 
@@ -97,7 +104,7 @@
     [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
     UIView *bgView = UIView.new;
-    bgView.backgroundColor = [UIColor purpleColor];
+    bgView.backgroundColor = [UIColor randomColor];
     [cell.contentView addSubview:bgView];
     [bgView mas_makeConstraints:^(MASConstraintMaker *make) {
        make.edges.equalTo(cell.contentView).insets(UIEdgeInsetsMake(2, 4, 2, 4));
@@ -111,9 +118,8 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self pushNextViewController:[UIViewController class]];
+    [self pushNextViewController:[ContentViewController class]];
 }
-
 
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -136,9 +142,8 @@
         _alpha = 0.99;
     }
     _titleLabel.alpha = _alpha;
-
-    UIImage *image = [UIImage imageWithColor:[UIColor colorWithRed:248/255.f green:87/255.f blue:77/255.f alpha:_alpha] size:CGSizeMake(1, 1)];
-    [self.navigationController.navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
+    
+    _navigationBgView.alpha = _alpha;
 }
 
 #pragma mark - helper
@@ -146,7 +151,7 @@
 - (void)pushNextViewController:(Class)class{
     UIViewController * vc = [[class alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
-    vc.view.backgroundColor = [UIColor purpleColor];
+    vc.view.backgroundColor = [UIColor randomColor];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

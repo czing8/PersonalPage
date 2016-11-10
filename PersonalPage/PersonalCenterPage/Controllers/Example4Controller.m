@@ -10,12 +10,10 @@
 #import "VExpand1Header.h"
 #define kRGB(r, g, b)      [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1]
 
-
 @interface Example4Controller ()<UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 
 @property (nonatomic, strong) NSArray * dataSource;
 @property (nonatomic, strong) NSArray * cellImages;
-
 
 @end
 
@@ -40,6 +38,7 @@
     self.view.backgroundColor = kRGB(239, 239, 244);
     UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(backAction:)];
     self.navigationItem.leftBarButtonItem = leftButton;
+
     
     VExpand1Header *test = [[VExpand1Header alloc] initWithTableViewWithHeaderImage:[UIImage imageNamed:@"bg"] withCoverHeight:200 withTableViewStyle:UITableViewStyleGrouped];
     test.tableView.delegate = self;
@@ -78,7 +77,7 @@
     }
     [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.accessoryType  = UITableViewCellAccessoryDisclosureIndicator;
     cell.textLabel.textColor = [UIColor colorWithWhite:0.293 alpha:1.000];
     cell.textLabel.font = [UIFont systemFontOfSize:15];
     cell.textLabel.text = _dataSource[indexPath.section][indexPath.row];

@@ -7,8 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "Example1Controller.h"
-#import "Example2Controller.h"
+#import "Example9Controller.h"
 
 @interface ViewController ()
 
@@ -31,7 +30,7 @@
 }
 
 - (void)initData{
-    _dataSource = @[@"1.最简单样式", @"2.拉伸效果：Storyboard实现", @"3.拉伸效果：代码实现，原理同2", @"4.拉伸效果：连tableView一起封装"];
+    _dataSource = @[ @"1、拉伸效果：Storyboard实现", @"2、拉伸效果：代码实现，原理同2", @"3、拉伸效果: 不同1、2实现", @"4、拉伸效果：连tableView一起封装", @"5、无效果"];
     
     
 }
@@ -68,10 +67,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.row == 0) {
-        [self performSegueWithIdentifier:@"ToExample2Segue" sender:self];
+        [self performSegueWithIdentifier:@"ToExample1Segue" sender:self];
     }
     else if (indexPath.row == 1) {
-        [self performSegueWithIdentifier:@"ToExample1Segue" sender:self];
+        [self performSegueWithIdentifier:@"ToExample2Segue" sender:self];
     }
     else if (indexPath.row == 2) {
         [self performSegueWithIdentifier:@"ToExample3Segue" sender:self];
@@ -79,12 +78,24 @@
     else if (indexPath.row == 3) {
         [self performSegueWithIdentifier:@"ToExample4Segue" sender:self];
     }
-
+    else if (indexPath.row == 4) {
+        [self presentNextController:[Example9Controller class]];
+    }
+    
     [self performSelector:@selector(deselect:) withObject:tableView afterDelay:0.2f];
 }
 
 - (void)deselect:(UITableView *)tableView {
     [tableView deselectRowAtIndexPath:[tableView indexPathForSelectedRow] animated:YES];
+}
+
+
+#pragma mark - helper
+- (void) presentNextController:(Class)class {
+    UIViewController * vc = [[class alloc] init];
+    UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:vc];
+    [self presentViewController:navController animated:YES completion:nil];
+
 }
 
 

@@ -1,5 +1,5 @@
 //
-//  Example5Controller.h
+//  ContentViewController.h
 //  PersonalCenterPage
 //
 //  Created by Vols on 2016/11/10.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface Example3Controller : UIViewController
+@interface ContentViewController : UIViewController
 
 @end
