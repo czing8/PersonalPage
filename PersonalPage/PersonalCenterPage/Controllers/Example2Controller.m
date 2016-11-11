@@ -2,8 +2,8 @@
 //  Example3Controller.m
 //  PersonalCenterPage
 //
-//  Created by Vols on 2016/11/8.
-//  Copyright © 2016年 vols. All rights reserved.
+//  Created by Vols on 2015/11/8.
+//  Copyright © 2015年 vols. All rights reserved.
 //
 
 #import "Example2Controller.h"
@@ -18,11 +18,14 @@
 #define kTabBarH    44
 
 
-@interface Example2Controller ()
+@interface Example2Controller () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UIView * navigationBgView;
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+
+@property (nonatomic, strong) UITableView   * tableView;
+
 @property (nonatomic, strong) NSArray * dataSource;
 @property (nonatomic, strong) NSArray * cellImages;
 
@@ -73,17 +76,16 @@
 }
 
 - (void)displayUIs{
-//    self.automaticallyAdjustsScrollViewInsets = NO;
+    self.automaticallyAdjustsScrollViewInsets = NO;
     
     [self navigationConfig];
     
+    [self.view addSubview:self.tableView];
+    [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
 
-    
-    _tableView.tableFooterView = [[UIView alloc] init];
-    _tableView.showsVerticalScrollIndicator = NO;
-    [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cellIdentifier"];
     _header = [VExpandHeader expandWithScrollView:_tableView expandView:self.headerExpandIView];
-
     
     UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, -120, [UIScreen mainScreen].bounds.size.width, 120)];
     contentView.backgroundColor = [UIColor clearColor];
@@ -129,8 +131,6 @@
     _navigationBgView.alpha = 0.0;
     UIView *uiBarBackground = self.navigationController.navigationBar.subviews.firstObject;
     [uiBarBackground addSubview:_navigationBgView];
-
-    
 }
 
 
@@ -152,6 +152,20 @@
         _titleLabel.backgroundColor = [UIColor clearColor];
     }
     return _titleLabel;
+}
+
+
+- (UITableView *)tableView{
+    if (!_tableView) {
+        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        _tableView.rowHeight = 44;
+        _tableView.tableFooterView = [[UIView alloc] init];
+        _tableView.showsVerticalScrollIndicator = NO;
+        [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cellIdentifier"];
+    }
+    return _tableView;
 }
 
 - (UIImageView *) headerExpandIView {

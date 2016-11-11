@@ -40,7 +40,39 @@
 }
 
 
-#pragma mark - Lazy Load （懒加载）
+- (void)navigationConfig {
+    
+    self.navigationItem.title = @"首页";
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addClick)];
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
+    
+    
+    UIView *uiBarBackground = self.navigationController.navigationBar.subviews.firstObject;
+    [uiBarBackground addSubview:self.navigationBgView];
+    
+    
+    UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(backAction:)];
+    self.navigationItem.leftBarButtonItem = leftButton;
+}
+
+
+
+#pragma mark - Actions
+
+- (void)addClick {
+    ContentViewController *secondVC = [[ContentViewController alloc] init];
+    [self.navigationController pushViewController:secondVC animated:YES];
+}
+
+- (void)backAction:(UIButton *)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+#pragma mark - Properities
 
 - (UITableView *)tableView {
     if (!_tableView) {
@@ -86,8 +118,25 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    [cell.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+
+    UIView *bgView = UIView.new;
+    bgView.backgroundColor = [UIColor randomColor];
+    [cell.contentView addSubview:bgView];
+    [bgView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(cell.contentView).insets(UIEdgeInsetsMake(2, 4, 2, 4));
+    }];
+    
+    cell.textLabel.text = [NSString stringWithFormat:@"%ld",indexPath.row];
+    cell.textLabel.textColor = [UIColor whiteColor];
+    cell.textLabel.textAlignment = NSTextAlignmentCenter;
     return cell;
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self pushNextViewController:[ContentViewController class]];
+}
+
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
@@ -129,35 +178,14 @@
 }
 
 
-- (void)navigationConfig {
-    
-    self.navigationItem.title = @"首页";
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addClick)];
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
-    [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
+#pragma mark - helper
 
-
-    UIView *uiBarBackground = self.navigationController.navigationBar.subviews.firstObject;
-    [uiBarBackground addSubview:self.navigationBgView];
-    
-    
-    UIBarButtonItem * leftButton = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(backAction:)];
-    self.navigationItem.leftBarButtonItem = leftButton;
+- (void)pushNextViewController:(Class)class{
+    UIViewController * vc = [[class alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    vc.view.backgroundColor = [UIColor randomColor];
+    [self.navigationController pushViewController:vc animated:YES];
 }
-
-- (void)addClick {
-    ContentViewController *secondVC = [[ContentViewController alloc] init];
-    [self.navigationController pushViewController:secondVC animated:YES];
-}
-
-
-- (void)backAction:(UIButton *)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-
 
 
 #pragma mark - properties

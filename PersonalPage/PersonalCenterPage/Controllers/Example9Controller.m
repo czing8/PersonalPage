@@ -1,9 +1,9 @@
 //
-//  ViewController.m
-//  头部缩放效果
+//  Example9Controller.m
+//  PersonalCenterPage
 //
-//  Created by qianfeng on 16/9/29.
-//  Copyright © 2016年 com.xuwenjie. All rights reserved.
+//  Created by Vols on 2014/11/10.
+//  Copyright © 2014年 vols. All rights reserved.
 //
 
 #import "Example9Controller.h"
@@ -51,7 +51,6 @@
     self.view.backgroundColor = [UIColor lightGrayColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.testBtn];
     [_testBtn mas_makeConstraints:^(MASConstraintMaker *make) {
